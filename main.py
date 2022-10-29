@@ -1,5 +1,6 @@
 # this is the main file for the project - put your code here
 
+# This code creates the different tetris shapes
 class shapes:
     x = 0
     y = 0
