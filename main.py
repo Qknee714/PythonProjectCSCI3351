@@ -5,7 +5,7 @@ import pygame
 
 
 class Block:
-    # attributes of the block in game
+    # attributes of the block
 
     x = 0
     y = 0
