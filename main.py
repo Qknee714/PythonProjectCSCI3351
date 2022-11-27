@@ -2,53 +2,46 @@
 
 # Be sure to install pygame before importing it
 
-import random
 import pygame
-
-
-class Block:
-    # attributes of the block in game
-
-    x = 0
-    y = 0
-
-    shapes = [
-        # every shape in a 4x4 grid indexed 0-15
-        # same line is different orientations of the same shape
-
-        [[1, 5, 9, 13], [4, 5, 6, 7]],  # line
-        [4, 5, 8, 9],   # square
-        [[2, 6, 5, 9], [1, 5, 6, 10]],  # vertical z
-        [[2, 3, 5, 6], [1, 2, 6, 7]],   # z shape
-        [[4, 5, 6, 9], [1, 4, 5, 6], [1, 5, 9, 6], [1, 4, 5, 9]],   # T shape
-        [[0, 4, 8, 9], [1, 5, 9, 8], [4, 0, 1, 2], [6, 2, 1, 0]]    # L shape
-    ]
-
-    colors = [
+import random
+colors = [
     (120, 37, 179),
     (100, 179, 179),
     (80, 34, 22),
     (80, 134, 22),
     (180, 34, 22),
     (180, 34, 122),
+]
+
+
+class Block:
+    x = 0
+    y = 0
+
+    shapes = [
+        [[1, 5, 9, 13], [4, 5, 6, 7]],
+        [[4, 5, 9, 10], [2, 6, 5, 9]],
+        [[6, 7, 9, 10], [1, 5, 6, 10]],
+        [[1, 2, 5, 9], [0, 4, 5, 6], [1, 5, 9, 8], [4, 5, 6, 10]],
+        [[1, 2, 6, 10], [5, 6, 7, 9], [2, 6, 10, 11], [3, 5, 6, 7]],
+        [[1, 4, 5, 6], [1, 4, 5, 9], [4, 5, 6, 9], [1, 5, 6, 9]],
+        [[1, 2, 5, 6]],
     ]
 
     def __init__(self, x, y):
-        # picks a random shape and color for the block
         self.x = x
         self.y = y
-        self.shape = random.randint(0, len(self.shapes) - 1)    # random shape
-        self.color = random.randint(0, len(self.colors) - 1)    # random color
-        self.orientation = 0   # orientation of the block
-
-    def rotate(self):
-        # rotates the block
-        self.orientation = (self.orientation + 1) % len(self.shapes[self.shape])
+        self.type = random.randint(0, len(self.shapes) - 1)
+        self.color = random.randint(1, len(colors) - 1)
+        self.rotation = 0
 
     def image(self):
-        # returns the shape and orientation of the block
-        return self.shapes[self.shape][self.orientation]
-    
+        return self.shapes[self.type][self.rotation]
+
+    def rotate(self):
+        self.rotation = (self.rotation + 1) % len(self.shapes[self.type])
+
+
 class Tetris:
     level = 2
     score = 0
@@ -146,7 +139,7 @@ WHITE = (255, 255, 255)
 GRAY = (128, 128, 128)
 Green = (0, 150, 0)
 
-size = (700, 700)
+size = (600, 600)
 screen = pygame.display.set_mode(size)
 
 pygame.display.set_caption("Recycle Tetris")
