@@ -1,5 +1,7 @@
 # this is the main file for the project - put your code here
 
+# Be sure to install pygame before importing it
+
 import random
 import pygame
 
