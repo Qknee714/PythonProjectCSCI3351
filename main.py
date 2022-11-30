@@ -185,7 +185,6 @@ while not done:
             if event.key == pygame.K_ESCAPE:
                 game.__init__(20, 10)
                 # Determines which random fact to display at the end
-                # ran_fact = random.randint(0, 1)
                 ran_fact = random_fact(text_fact)
 
     if event.type == pygame.KEYUP:
