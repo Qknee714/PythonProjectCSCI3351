@@ -216,10 +216,20 @@ while not done:
     text_game_over = font1.render("Congratulations you recycled: " + str(game.score) + " Pounds of Plastic!", True, (0, 0, 0))
     text_game_over1 = font1.render("Press ESC to try again", True, (0, 0, 0))
 
-    text_fact = [font1.render("Apple", True, (0, 0, 0)),
-                 font1.render("Banana", True, (0, 0, 0))
-                 ]
-
+    text_fact = [font1.render("Cardboard boxes can be recycled at least seven times", True, (0, 0, 0)),
+                 font1.render("Every year, 2.4 million tons of recycled glass are used to make new bottles and jars", True, (0, 0, 0))
+                 font1.render("More than 52 million tons of paper products were recycled in 2018. That’s roughly the same weight as almost 350,000 blue whales", True, (0, 0, 0)),
+                 font1.render("If you recycle one glass bottle, it saves enough energy to light a 100-watt bulb for four hours", True, (0, 0, 0)),
+                 font1.render("In the U.S., enough stainless steel is recycled each year to build nearly 1,500 Gateway Arches.", True, (0, 0, 0)),
+                 font1.render("One metric ton of electronic scrap from personal computers contains more gold than that recovered from 17 tons of gold ore.", True, (0, 0, 0)),
+                 font1.render("The average paper usage per person is around 700 pounds per year.", True, (0, 0, 0)),
+                 font1.render("A massive 80 billion soda cans are consumed in the US each year.", True, (0, 0, 0)),
+                 font1.render("The glass recycling rate in the US is around 33%..", True, (0, 0, 0)),
+                 font1.render("Around 10 million tons of glass that is disposed of by Americans gets recycled each year.", True, (0, 0, 0)),
+                 font1.render("Discarded electronics in landfills make up 2% of the total trash found there.", True, (0, 0, 0)),
+                 font1.render("One study suggests that plastic pollution affects at least 700 marine species, but in reality, this figure is likely to be much higher.", True, (0, 0, 0)),
+                ]
+    
     screen.blit(text, [0, 0])
     if game.state == "gameover":
         screen.blit(text_game_over, [20, 200])
