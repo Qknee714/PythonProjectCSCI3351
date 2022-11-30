@@ -14,6 +14,9 @@ colors = [
 ]
 
 
+def random_fact(x):
+    return random.randint(0, len(x) - 1)
+
 class Block:
     x = 0
     y = 0
@@ -129,7 +132,6 @@ class Tetris:
         if self.intersects():
             self.figure.rotation = old_rotation
 
-
 # Initialize the game engine
 pygame.init()
 
@@ -156,6 +158,8 @@ pressing_down = False
 while not done:
     if game.figure is None:
         game.new_Block()
+        # Determines which random fact to display at the end
+        ran_fact = 0
     counter += 1
     if counter > 100000:
         counter = 0
@@ -180,6 +184,9 @@ while not done:
                 game.go_space()
             if event.key == pygame.K_ESCAPE:
                 game.__init__(20, 10)
+                # Determines which random fact to display at the end
+                # ran_fact = random.randint(0, 1)
+                ran_fact = random_fact(text_fact)
 
     if event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
@@ -210,10 +217,15 @@ while not done:
     text_game_over = font1.render("Congratulations you recycled: " + str(game.score) + " Pounds of Plastic!", True, (0, 0, 0))
     text_game_over1 = font1.render("Press ESC to try again", True, (0, 0, 0))
 
+    text_fact = [font1.render("Apple", True, (0, 0, 0)),
+                 font1.render("Banana", True, (0, 0, 0))
+                 ]
+
     screen.blit(text, [0, 0])
     if game.state == "gameover":
         screen.blit(text_game_over, [20, 200])
         screen.blit(text_game_over1, [25, 265])
+        screen.blit(text_fact[ran_fact], [30, 320])
 
     pygame.display.flip()
     clock.tick(fps)
