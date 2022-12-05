@@ -9,8 +9,6 @@ colors = [
     "Teal", "Dim Grey", "Dark Red", "Dark Blue", "Dark Green", "Golden Rod"
 ]
 
-def random_fact(x):
-    return random.randint(0, len(x) - 1)
 
 class Block:
     # every block has its own shape, color, and position
@@ -57,12 +55,16 @@ class Tetris:
     y = 50  # the y position of the top left corner of the grid
     zoom = 40  # how big the grid is
 
+    display_once = 0    # used so fact text is only chosen once every game
+
     def __init__(self, height, width):
         self.height = height
         self.width = width
         self.field = []
         self.score = 0
         self.state = "start"
+
+        self.display_once = 0
 
         # following loops create the playing field in height x width
         for i in range(height):
@@ -311,11 +313,6 @@ def game_loop():
                     game.go_space()
                 if event.key == pygame.K_ESCAPE:  # escape = restart game
                     game.__init__(20, 10)
-                    
-                    
-                # Determines which random fact to display at the end
-                # ran_fact = random.randint(0, 1)
-                ran_fact = random_fact(text_fact)
 
             # reverts pressing_down if the down arrow key is released
             if event.type == pygame.KEYUP:
@@ -358,24 +355,23 @@ def game_loop():
         text_game_over1 = font.render("        " + str(game.score) + " Pounds of Plastic!", True, "White")
         text_game_over2 = font.render("Press ESC to try again.", True, "White")
 
-         text_fact = [font1.render("Cardboard boxes can be recycled at least seven times", True, (0, 0, 0)),
-                 font1.render("Every year, 2.4 million tons of recycled glass are used to make new bottles and jars", True, (0, 0, 0))
-                 font1.render("More than 52 million tons of paper products were recycled in 2018. That’s roughly the same weight as almost 350,000 blue whales", True, (0, 0, 0)),
-                 font1.render("If you recycle one glass bottle, it saves enough energy to light a 100-watt bulb for four hours", True, (0, 0, 0)),
-                 font1.render("In the U.S., enough stainless steel is recycled each year to build nearly 1,500 Gateway Arches.", True, (0, 0, 0)),
-                 font1.render("One metric ton of electronic scrap from personal computers contains more gold than that recovered from 17 tons of gold ore.", True, (0, 0, 0)),
-                 font1.render("The average paper usage per person is around 700 pounds per year.", True, (0, 0, 0)),
-                 font1.render("A massive 80 billion soda cans are consumed in the US each year.", True, (0, 0, 0)),
-                 font1.render("The glass recycling rate in the US is around 33%..", True, (0, 0, 0)),
-                 font1.render("Around 10 million tons of glass that is disposed of by Americans gets recycled each year.", True, (0, 0, 0)),
-                 font1.render("Discarded electronics in landfills make up 2% of the total trash found there.", True, (0, 0, 0)),
-                 font1.render("One study suggests that plastic pollution affects at least 700 marine species, but in reality, this figure is likely to be much higher.", True, (0, 0, 0)),
-                ]
-        
-        
-        
-        
-        
+        facts = [
+            ["Cardboard boxes can be recycled at least", "seven times!"],
+            ["Every year, 2.4 million tons of recycled", "glass are used to make new bottles and jars!"],
+            ["More than 52 million tons of paper", "products were recycled in 2018. That’s",
+             "roughly the same weight as almost", "350,000 blue whales!"],
+            ["If you recycle one glass bottle, it saves", "enough energy to light a 100-watt", "bulb for four hours!"],
+            ["In the U.S., enough stainless steel is", "recycled each year to build nearly", "1,500 Gateway Arches!"],
+            ["One metric ton of electronic scrap from", "personal computers contains more gold than",
+             "that recovered from 17 tons of gold ore."],
+            ["Go to how2recycle.info/check-locally to", "learn more about recycling in your area."]
+        ]
+
+        # randomly select the fact to display
+        if game.display_once == 0:
+            fact = random.choice(range(len(facts)))
+            game.display_once = 1
+
         # set text to screen
         screen.blit(score_text, [100, 10])  # current score
 
@@ -387,10 +383,15 @@ def game_loop():
                 screen.blit(text_game_over3, [550, 60])
             else:
                 screen.blit(text_game_over, [550, 60])
-                screen.blit(text_game_over1, [550, 100])
-                screen.blit(text_game_over2, [550, 140])
-                screen.blit(text_fact[ran_fact], [30, 320])
-                
+            screen.blit(text_game_over1, [550, 100])
+            screen.blit(text_game_over2, [550, 140])
+
+            space = 0
+            for line in facts[fact]:
+                text_fact = font.render(line, True, "White")
+                screen.blit(text_fact, [550, 200 + space])
+                space += 40
+
         pygame.display.flip()  # refreshes the screen
         clock.tick(fps)  # determines speed of game
 
