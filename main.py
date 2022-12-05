@@ -355,6 +355,7 @@ def game_loop():
         text_game_over1 = font.render("        " + str(game.score) + " Pounds of Plastic!", True, "White")
         text_game_over2 = font.render("Press ESC to try again.", True, "White")
 
+        # list of random facts
         facts = [
             ["Cardboard boxes can be recycled at least", "seven times!"],
             ["Every year, 2.4 million tons of recycled", "glass are used to make new bottles and jars!"],
@@ -383,14 +384,16 @@ def game_loop():
                 screen.blit(text_game_over3, [550, 60])
             else:
                 screen.blit(text_game_over, [550, 60])
+            
+            # add game over text to screen
             screen.blit(text_game_over1, [550, 100])
             screen.blit(text_game_over2, [550, 140])
 
-            space = 0
+            space = 0   # the space between the lines
             for line in facts[fact]:
-                text_fact = font.render(line, True, "White")
-                screen.blit(text_fact, [550, 200 + space])
-                space += 40
+                text_fact = font.render(line, True, "White")    # render the line in pygame
+                screen.blit(text_fact, [550, 200 + space])      # add it to the screen
+                space += 40     # increment the space for the next line
 
         pygame.display.flip()  # refreshes the screen
         clock.tick(fps)  # determines speed of game
